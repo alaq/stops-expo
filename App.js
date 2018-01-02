@@ -29,7 +29,7 @@ export default class App extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>HomeScreen</Title>
+            <Title>Stops</Title>
           </Body>
           <Right />
         </Header>
@@ -37,7 +37,7 @@ export default class App extends React.Component {
           <Card>
             <CardItem>
               <Body>
-                <Text>Chat App to talk some awesome people!</Text>
+                <Text>Where are you going?</Text>
               </Body>
             </CardItem>
           </Card>
@@ -48,7 +48,7 @@ export default class App extends React.Component {
             style={{ marginTop: 10 }}
             onPress={() => this.props.navigation.navigate('Chat')}
           >
-            <Text>Chat With People</Text>
+            <Text>Navigate to your destination</Text>
           </Button>
           <Button
             full
@@ -57,24 +57,10 @@ export default class App extends React.Component {
             style={{ marginTop: 10 }}
             onPress={() => this.props.navigation.navigate('Profile')}
           >
-            <Text>Goto Profiles</Text>
+            <Text>Pre-download a city</Text>
           </Button>
         </Content>
       </Container>
-      // <View style={styles.container}>
-      //   <Text>Open up App.js to start working on your app!</Text>
-      //   <Text>Changes you make will automatically reload.</Text>
-      //   <Text>Shake your phone to open the developer menu.</Text>
-      // </View>
     )
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
