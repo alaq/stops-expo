@@ -23,7 +23,7 @@ export default class App extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
+              // onPress={() => this.props.navigation.navigate('DrawerOpen')}
             >
               <Icon name="menu" />
             </Button>
@@ -46,7 +46,7 @@ export default class App extends React.Component {
             rounded
             dark
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('Chat')}
+            // onPress={() => this.props.navigation.navigate('Chat')}
           >
             <Text>Navigate to your destination</Text>
           </Button>
@@ -55,7 +55,7 @@ export default class App extends React.Component {
             rounded
             primary
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('Profile')}
+            // onPress={() => this.props.navigation.navigate('Profile')}
           >
             <Text>Pre-download a city</Text>
           </Button>
