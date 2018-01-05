@@ -12,7 +12,9 @@ import {
   Item,
   Input,
   List,
-  ListItem
+  ListItem,
+  Right,
+  Badge
 } from 'native-base'
 import getTheme from './native-base-theme/components'
 import platform from './native-base-theme/variables/platform'
@@ -26,32 +28,37 @@ export default class App extends React.Component {
         {/* <StyleProvider style={getTheme(commonColor)}> */}
         {/* <StyleProvider style={getTheme(material)}> */}
         <Container>
-          <Header>
-            <Body>
-              <Title>Stops</Title>
-              <Subtitle>We'll wake you up at your destination</Subtitle>
-            </Body>
-          </Header>
-          <Header searchBar rounded style={{ paddingTop: 0 }}>
+          <Header searchBar>
             <Item>
-              <Icon name="ios-search" />
+              <Icon name="md-map" />
               <Input placeholder="Enter a stop, or an address" />
-              <Icon name="ios-bus" />
+              <Icon name="md-cog" />
             </Item>
           </Header>
           <Content padder>
             <Content>
               <List>
                 <ListItem>
+                  <Badge>
+                    <Text success>L</Text>
+                  </Badge>
                   <Text>Bedford Ave</Text>
                 </ListItem>
                 <ListItem>
+                  <Badge>
+                    <Text success>L</Text>
+                  </Badge>
                   <Text>Brooklyn College</Text>
                 </ListItem>
                 <ListItem>
                   <Text>Central Park</Text>
                 </ListItem>
               </List>
+                  <Badge>
+                    <Text success>1</Text>
+                  </Badge>
+              <Text>Stops</Text>
+              <Text>Don't worry, we'll wake you up</Text>
             </Content>
           </Content>
         </Container>
