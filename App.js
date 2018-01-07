@@ -1,4 +1,5 @@
 import React from 'react'
+import { View } from 'react-native'
 import {
   Container,
   Header,
@@ -14,7 +15,9 @@ import {
   List,
   ListItem,
   Right,
-  Badge
+  Left,
+  Badge,
+  H1
 } from 'native-base'
 import getTheme from './native-base-theme/components'
 import platform from './native-base-theme/variables/platform'
@@ -35,8 +38,18 @@ export default class App extends React.Component {
               <Icon name="md-cog" />
             </Item>
           </Header>
-          <Content padder>
-            <Content>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center'
+              // backgroundColor: 'grey'
+            }}
+          >
+            <H1>Stops</H1>
+            <Text>Don't worry, we'll wake you up</Text>
+          </View>
+          {/* <Content padder>
               <List>
                 <ListItem>
                   <Badge>
@@ -54,13 +67,7 @@ export default class App extends React.Component {
                   <Text>Central Park</Text>
                 </ListItem>
               </List>
-                  <Badge>
-                    <Text success>1</Text>
-                  </Badge>
-              <Text>Stops</Text>
-              <Text>Don't worry, we'll wake you up</Text>
-            </Content>
-          </Content>
+          </Content> */}
         </Container>
       </StyleProvider>
     )
