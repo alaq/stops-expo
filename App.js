@@ -25,6 +25,30 @@ import platform from './native-base-theme/variables/platform'
 // import material from './native-base-theme/variables/material'
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null
+    }
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        })
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    )
+  }
+
   render() {
     return (
       <StyleProvider style={getTheme(platform)}>
@@ -43,11 +67,13 @@ export default class App extends React.Component {
               flex: 1,
               alignItems: 'center',
               justifyContent: 'center'
-              // backgroundColor: 'grey'
             }}
           >
             <H1>Stops</H1>
             <Text>Don't worry, we'll wake you up</Text>
+            <Text>
+              {this.state.latitude} : {this.state.longitude}
+            </Text>
           </View>
           {/* <Content padder>
               <List>
