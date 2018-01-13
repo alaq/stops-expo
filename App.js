@@ -109,17 +109,24 @@ export default class App extends React.Component {
                     <Text>{this.state.searchInput}</Text>
                   </Body>
                 </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Icon name="bus" />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.searchInput}</Text>
+                  </Body>
+                </ListItem>
               </List>
             ) : (
-              <Text />
+              <Text style={{ height: 0 }} />
             )}
             <View
               style={{
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                zIndex: 1,
-                height: '100%'
+                zIndex: 1
               }}
             >
               <Text>'Hello'</Text>
