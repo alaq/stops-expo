@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image } from 'react-native'
+import { View, Image, ImageBackground } from 'react-native'
 import {
   Container,
   Header,
@@ -42,7 +42,8 @@ export default class App extends React.Component {
       latitude: null,
       longitude: null,
       error: null,
-      searchInput: ''
+      searchInput: '',
+      searchResult: []
     }
 
     this.handleSearch = this.handleSearch.bind(this)
@@ -80,65 +81,75 @@ export default class App extends React.Component {
                 onChangeText={text => this.handleSearch(text)}
                 value={this.state.searchInput}
               />
-              <Icon name="md-cog" />
+              {this.state.searchInput ? (
+                <Icon name="ios-close-circle" />
+              ) : (
+                <Text />
+              )}
             </Item>
           </Header>
           <Content>
-            {this.state.searchInput ? (
-              <List
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  zIndex: 2
-                }}
-              >
-                <ListItem icon>
-                  <Left>
-                    <Icon name="plane" />
-                  </Left>
-                  <Body>
-                    <Text>{this.state.searchInput}</Text>
-                  </Body>
-                </ListItem>
-                <ListItem icon>
-                  <Left>
-                    <Icon name="bus" />
-                  </Left>
-                  <Body>
-                    <Text>{this.state.searchInput}</Text>
-                  </Body>
-                </ListItem>
-                <ListItem icon>
-                  <Left>
-                    <Icon name="bus" />
-                  </Left>
-                  <Body>
-                    <Text>{this.state.searchInput}</Text>
-                  </Body>
-                </ListItem>
-              </List>
-            ) : (
-              <Text style={{ height: 0 }} />
-            )}
             <View
               style={{
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                zIndex: 1
+                display: 'flex',
+                height: 680
               }}
             >
-              <Text>'Hello'</Text>
-              <Text>'Hello'</Text>
-              <Text>'Hello'</Text>
-              <Text>'Hello'</Text>
-              <H1>Stops</H1>
-              <Text>Don't worry, we'll wake you up</Text>
-              <Text>
-                {this.state.latitude} : {this.state.longitude}
-              </Text>
-              {/* <GooglePlacesAutocomplete
+              {this.state.searchInput ? (
+                <List
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    zIndex: 2
+                  }}
+                >
+                  <ListItem icon>
+                    <Left>
+                      <Icon name="plane" />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.searchInput}</Text>
+                    </Body>
+                  </ListItem>
+                  <ListItem icon>
+                    <Left>
+                      <Icon name="md-map" />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.searchInput}</Text>
+                    </Body>
+                  </ListItem>
+                  <ListItem icon>
+                    <Left>
+                      <Icon name="bus" />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.searchInput}</Text>
+                    </Body>
+                  </ListItem>
+                </List>
+              ) : (
+                <Text style={{ height: 0 }} />
+              )}
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 1
+                }}
+              >
+                <H1>Stops</H1>
+                <Text>Don't worry, we'll wake you up</Text>
+                <Text>
+                  {this.state.latitude} : {this.state.longitude}
+                </Text>
+                {/* <GooglePlacesAutocomplete
               placeholder="Search"
               minLength={2} // minimum length of text to search
               autoFocus={true}
@@ -190,6 +201,7 @@ export default class App extends React.Component {
               // renderLeftButton={() => <Image source={require('./i.png')} />}
               // renderRightButton={() => <Text>Custom text after the input</Text>}
             /> */}
+              </View>
             </View>
           </Content>
         </Container>
