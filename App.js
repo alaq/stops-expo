@@ -82,7 +82,10 @@ export default class App extends React.Component {
                 value={this.state.searchInput}
               />
               {this.state.searchInput ? (
-                <Icon name="ios-close-circle" />
+                <Icon
+                  name="ios-close-circle"
+                  onPress={() => this.setState({ searchInput: '' })}
+                />
               ) : (
                 <Text />
               )}
@@ -149,6 +152,13 @@ export default class App extends React.Component {
                 <Text>
                   {this.state.latitude} : {this.state.longitude}
                 </Text>
+                <Text />
+                <Text />
+                <Text />
+                <Text />
+                <Text />
+                <Text />
+                <Text />
                 {/* <GooglePlacesAutocomplete
               placeholder="Search"
               minLength={2} // minimum length of text to search
