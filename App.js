@@ -23,6 +23,7 @@ import getTheme from './native-base-theme/components'
 import platform from './native-base-theme/variables/platform'
 // import commonColor from './native-base-theme/variables/commonColor'
 // import material from './native-base-theme/variables/material'
+import { StackNavigator } from 'react-navigation'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const homePlace = {
@@ -34,7 +35,7 @@ const workPlace = {
   geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }
 }
 
-export default class App extends React.Component {
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
 
@@ -111,7 +112,10 @@ export default class App extends React.Component {
                     zIndex: 2
                   }}
                 >
-                  <ListItem icon>
+                  <ListItem
+                    icon
+                    onPress={() => this.props.navigation.navigate('Details')}
+                  >
                     <Left>
                       <Icon name="plane" />
                     </Left>
@@ -219,3 +223,25 @@ export default class App extends React.Component {
     )
   }
 }
+
+const DetailsScreen = () => (
+  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Text>Details Screen</Text>
+  </View>
+)
+
+const RootNavigator = StackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    },
+    Details: {
+      screen: DetailsScreen
+    }
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
+export default RootNavigator
