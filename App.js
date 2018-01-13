@@ -41,8 +41,11 @@ export default class App extends React.Component {
     this.state = {
       latitude: null,
       longitude: null,
-      error: null
+      error: null,
+      searchInput: ''
     }
+
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   componentDidMount() {
@@ -59,32 +62,69 @@ export default class App extends React.Component {
     )
   }
 
+  handleSearch(text) {
+    this.setState({ searchInput: text })
+  }
+
   render() {
     return (
       <StyleProvider style={getTheme(platform)}>
         {/* <StyleProvider style={getTheme(commonColor)}> */}
         {/* <StyleProvider style={getTheme(material)}> */}
         <Container>
-          <Header searchBar>
+          <Header searchBar rounded>
             <Item>
               <Icon name="md-map" />
-              <Input placeholder="Enter a stop, or an address" />
+              <Input
+                placeholder="Enter a stop, or an address"
+                onChangeText={text => this.handleSearch(text)}
+                value={this.state.searchInput}
+              />
               <Icon name="md-cog" />
             </Item>
           </Header>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <H1>Stops</H1>
-            <Text>Don't worry, we'll wake you up</Text>
-            <Text>
-              {this.state.latitude} : {this.state.longitude}
-            </Text>
-            <GooglePlacesAutocomplete
+          <Content>
+            {this.state.searchInput ? (
+              <List
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0
+                }}
+              >
+                <ListItem icon>
+                  <Left>
+                    <Icon name="plane" />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.searchInput}</Text>
+                  </Body>
+                </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Icon name="bus" />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.searchInput}</Text>
+                  </Body>
+                </ListItem>
+              </List>
+            ) : (
+              <Text />
+            )}
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <H1>Stops</H1>
+              <Text>Don't worry, we'll wake you up</Text>
+              <Text>
+                {this.state.latitude} : {this.state.longitude}
+              </Text>
+              {/* <GooglePlacesAutocomplete
               placeholder="Search"
               minLength={2} // minimum length of text to search
               autoFocus={true}
@@ -135,8 +175,9 @@ export default class App extends React.Component {
               debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
               // renderLeftButton={() => <Image source={require('./i.png')} />}
               // renderRightButton={() => <Text>Custom text after the input</Text>}
-            />
-          </View>
+            /> */}
+            </View>
+          </Content>
         </Container>
       </StyleProvider>
     )
