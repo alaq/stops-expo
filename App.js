@@ -89,7 +89,8 @@ export default class App extends React.Component {
                 style={{
                   position: 'absolute',
                   left: 0,
-                  right: 0
+                  right: 0,
+                  zIndex: 2
                 }}
               >
                 <ListItem icon>
@@ -116,9 +117,15 @@ export default class App extends React.Component {
               style={{
                 flex: 1,
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                zIndex: 1,
+                height: '100%'
               }}
             >
+              <Text>'Hello'</Text>
+              <Text>'Hello'</Text>
+              <Text>'Hello'</Text>
+              <Text>'Hello'</Text>
               <H1>Stops</H1>
               <Text>Don't worry, we'll wake you up</Text>
               <Text>
