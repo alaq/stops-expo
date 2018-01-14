@@ -17,7 +17,8 @@ import {
   Right,
   Left,
   Badge,
-  H1
+  H1,
+  Button
 } from 'native-base'
 import getTheme from './native-base-theme/components'
 import platform from './native-base-theme/variables/platform'
@@ -114,7 +115,11 @@ class HomeScreen extends React.Component {
                 >
                   <ListItem
                     icon
-                    onPress={() => this.props.navigation.navigate('Details')}
+                    onPress={() =>
+                      this.props.navigation.navigate('Details', {
+                        place: this.state.searchInput
+                      })
+                    }
                   >
                     <Left>
                       <Icon name="plane" />
@@ -224,9 +229,12 @@ class HomeScreen extends React.Component {
   }
 }
 
-const DetailsScreen = () => (
+const DetailsScreen = ({ navigation }) => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Details Screen</Text>
+    <Text>{navigation.state.params.place}</Text>
+    <Button onPress={() => navigation.goBack(null)}>
+      <Text>Go back</Text>
+    </Button>
   </View>
 )
 
@@ -236,6 +244,7 @@ const RootNavigator = StackNavigator(
       screen: HomeScreen
     },
     Details: {
+      path: 'stop/:place',
       screen: DetailsScreen
     }
   },
