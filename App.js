@@ -117,7 +117,7 @@ class HomeScreen extends React.Component {
                     icon
                     onPress={() =>
                       this.props.navigation.navigate('Details', {
-                        placeName: this.state.searchInput
+                        place: this.state.searchInput
                       })
                     }
                   >
@@ -231,7 +231,7 @@ class HomeScreen extends React.Component {
 
 const DetailsScreen = ({ navigation }) => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Details Screen</Text>
+    <Text>{navigation.state.params.place}</Text>
     <Button onPress={() => navigation.goBack(null)}>
       <Text>Go back</Text>
     </Button>
