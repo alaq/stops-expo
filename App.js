@@ -100,7 +100,8 @@ class HomeScreen extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
                 display: 'flex',
-                height: 680
+                height: 680,
+                backgroundColor: 'white'
               }}
             >
               {this.state.searchInput ? (
@@ -122,7 +123,18 @@ class HomeScreen extends React.Component {
                     }
                   >
                     <Left>
-                      <Icon name="plane" />
+                      <Icon
+                        name="plane"
+                        style={{
+                          backgroundColor: 'red',
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          overflow: 'hidden',
+                          paddingLeft: 2,
+                          paddingRight: 2,
+                          borderColor: 'red'
+                        }}
+                      />
                     </Left>
                     <Body>
                       <Text>{this.state.searchInput}</Text>
