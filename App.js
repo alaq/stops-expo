@@ -66,7 +66,28 @@ class HomeScreen extends React.Component {
   }
 
   handleSearch(text) {
+    var request = new XMLHttpRequest()
     this.setState({ searchInput: text })
+    if (text.length > 2) {
+      request.open(
+        'GET',
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
+          text
+      )
+      request.send()
+    }
+
+    request.onload = () => {
+      const responseJSON = JSON.parse(request.responseText)
+      console.log(
+        'main',
+        responseJSON.predictions[0].structured_formatting.main_text
+      )
+      console.log(
+        'secondary',
+        responseJSON.predictions[0].structured_formatting.secondary_text
+      )
+    }
   }
 
   render() {
