@@ -26,6 +26,7 @@ import platform from './native-base-theme/variables/platform'
 // import material from './native-base-theme/variables/material'
 import { StackNavigator } from 'react-navigation'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import debounce from 'lodash.debounce'
 
 const homePlace = {
   description: 'Home',
@@ -35,6 +36,26 @@ const workPlace = {
   description: 'Work',
   geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }
 }
+
+var request = new XMLHttpRequest()
+
+// function debouncedRequest(query) {
+//   debounce(() => {
+//     console.log(query)
+//     request.send()
+//   }, 2000)
+// }
+
+function requestToGoogle(query) {
+  request.open(
+    'GET',
+    'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
+      query
+  )
+  request.send()
+}
+
+const debouncedRequest = debounce(requestToGoogle, 2000)
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -66,15 +87,9 @@ class HomeScreen extends React.Component {
   }
 
   handleSearch(text) {
-    var request = new XMLHttpRequest()
     this.setState({ searchInput: text })
     if (text.length > 2) {
-      request.open(
-        'GET',
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
-          text
-      )
-      request.send()
+      debouncedRequest(text)
     }
 
     request.onload = () => {
