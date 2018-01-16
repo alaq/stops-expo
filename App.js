@@ -37,25 +37,33 @@ const workPlace = {
   geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }
 }
 
-var request = new XMLHttpRequest()
-
-// function debouncedRequest(query) {
-//   debounce(() => {
-//     console.log(query)
-//     request.send()
-//   }, 2000)
-// }
+let request = new XMLHttpRequest()
 
 function requestToGoogle(query) {
+  request = new XMLHttpRequest()
+  console.log('open request', request.readyState)
   request.open(
     'GET',
     'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
       query
   )
+  console.log('send request', request.readyState)
   request.send()
+
+  request.onload = () => {
+    const responseJSON = JSON.parse(request.responseText)
+    console.log(
+      'main',
+      responseJSON.predictions[0].structured_formatting.main_text
+    )
+    console.log(
+      'secondary',
+      responseJSON.predictions[0].structured_formatting.secondary_text
+    )
+  }
 }
 
-const debouncedRequest = debounce(requestToGoogle, 2000)
+const debouncedRequest = debounce(requestToGoogle, 2000, { leading: true })
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -90,18 +98,6 @@ class HomeScreen extends React.Component {
     this.setState({ searchInput: text })
     if (text.length > 2) {
       debouncedRequest(text)
-    }
-
-    request.onload = () => {
-      const responseJSON = JSON.parse(request.responseText)
-      console.log(
-        'main',
-        responseJSON.predictions[0].structured_formatting.main_text
-      )
-      console.log(
-        'secondary',
-        responseJSON.predictions[0].structured_formatting.secondary_text
-      )
     }
   }
 
