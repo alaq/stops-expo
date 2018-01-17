@@ -56,11 +56,14 @@ class HomeScreen extends React.Component {
   }
 
   handleSearch(text) {
-    function placesAutocomplete(text) {
+    const placesAutocomplete = text => {
       fetch(
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
           text
-      ).then(console.log)
+      ).then(response => {
+        const jsonPredictions = JSON.parse(response._bodyInit).predictions
+        this.setState({ searchResult: jsonPredictions })
+      })
     }
 
     if (text.length > 2 && !this.state.isLoading) {
@@ -129,39 +132,26 @@ class HomeScreen extends React.Component {
                     }
                   >
                     <Left>
-                      <Icon
-                        name="plane"
-                        style={{
-                          backgroundColor: 'red',
-                          borderRadius: 4,
-                          borderWidth: 1,
-                          overflow: 'hidden',
-                          paddingLeft: 2,
-                          paddingRight: 2,
-                          borderColor: 'red'
-                        }}
-                      />
+                      <Icon name="ios-search" />
                     </Left>
                     <Body>
-                      <Text>{this.state.searchInput}</Text>
+                      <Text>
+                        Search "{this.state.searchInput}" as an address...
+                      </Text>
                     </Body>
                   </ListItem>
-                  <ListItem icon>
-                    <Left>
-                      <Icon name="md-map" />
-                    </Left>
-                    <Body>
-                      <Text>{this.state.searchInput}</Text>
-                    </Body>
-                  </ListItem>
-                  <ListItem icon>
-                    <Left>
-                      <Icon name="bus" />
-                    </Left>
-                    <Body>
-                      <Text>{this.state.searchInput}</Text>
-                    </Body>
-                  </ListItem>
+                  {this.state.searchResult.map(result => {
+                    return (
+                      <ListItem key={result.id} icon>
+                        <Left>
+                          <Icon name="md-map" />
+                        </Left>
+                        <Body>
+                          <Text>{result.structured_formatting.main_text}</Text>
+                        </Body>
+                      </ListItem>
+                    )
+                  })}
                 </List>
               ) : (
                 <Text style={{ height: 0 }} />
