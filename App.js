@@ -25,45 +25,6 @@ import platform from './native-base-theme/variables/platform'
 // import commonColor from './native-base-theme/variables/commonColor'
 // import material from './native-base-theme/variables/material'
 import { StackNavigator } from 'react-navigation'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import debounce from 'lodash.debounce'
-
-const homePlace = {
-  description: 'Home',
-  geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }
-}
-const workPlace = {
-  description: 'Work',
-  geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }
-}
-
-let request = new XMLHttpRequest()
-
-function requestToGoogle(query) {
-  request = new XMLHttpRequest()
-  console.log('open request', request.readyState)
-  request.open(
-    'GET',
-    'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
-      query
-  )
-  console.log('send request', request.readyState)
-  request.send()
-
-  request.onload = () => {
-    const responseJSON = JSON.parse(request.responseText)
-    console.log(
-      'main',
-      responseJSON.predictions[0].structured_formatting.main_text
-    )
-    console.log(
-      'secondary',
-      responseJSON.predictions[0].structured_formatting.secondary_text
-    )
-  }
-}
-
-const debouncedRequest = debounce(requestToGoogle, 2000, { leading: true })
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -74,9 +35,9 @@ class HomeScreen extends React.Component {
       longitude: null,
       error: null,
       searchInput: '',
-      searchResult: []
+      searchResult: [],
+      isLoading: false
     }
-
     this.handleSearch = this.handleSearch.bind(this)
   }
 
@@ -95,9 +56,17 @@ class HomeScreen extends React.Component {
   }
 
   handleSearch(text) {
-    this.setState({ searchInput: text })
-    if (text.length > 2) {
-      debouncedRequest(text)
+    if (text.length > 2 && !this.state.isLoading) {
+      this.setState({ searchInput: text, isLoading: true })
+      fetch(
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyBa2s7Y4_idfCl6UQOhAOJtasI01mQwv0g&input=' +
+          text
+      ).then(console.log)
+      setTimeout(() => {
+        this.setState({ isLoading: false })
+      }, 2000)
+    } else {
+      this.setState({ searchInput: text })
     }
   }
 
